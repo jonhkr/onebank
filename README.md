@@ -1,5 +1,7 @@
 # OneBank
 
+[![Build Status](https://travis-ci.org/jonhkr/onebank.svg?branch=master)](https://travis-ci.org/jonhkr/onebank)
+
 **TODO: Add description**
 
 ## Installation
