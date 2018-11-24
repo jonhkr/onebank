@@ -1,0 +1,46 @@
+User
+- id
+- email
+- password_hash
+- full_name
+- created_at
+
+UserRegistered{id: 123}
+
+UserSession
+- id
+- token
+- created_at
+- revoked_at
+
+Account:
+- id
+- version
+- iban
+- user_id
+- currency
+- balance
+- created_at
+
+AccountEvents:
+InitialDepositCreated(account_id: 1, amount: 1000)
+TransferRequested(account_id: 1, correlation_id: "xxxx-xxx-xxx-xx", amount: 100, destination: "BR123")
+TransferCompleted(account_id: 1, correlation_id: "xxxx-xxx-xxx-xx")
+TransferReceived(account_id: 2, correlation_id: "xxxx-xxx-xxx-xx", amount: 100, source: "BR456")
+MoneyWithdrew(account_id: 1, amount: 100)
+
+GenStage -> producing AccountEvents
+
+// Reporting
+
+GenStage <- consuming AccountEvents
+
+AccountTransactions
+- id
+- type: InitialDeposit/Transfer/Withdrawal
+- amount
+- account_id
+- amount
+- created_at
+- completed_at
+- meta
