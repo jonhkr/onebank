@@ -3,7 +3,7 @@ defmodule OneBank.AccountOpenedEvent do
 
   defstruct account_id: nil, initial_deposit: nil
 
-  @impl Parser
+  @impl OneBank.AccountEvent
   def type, do: :account_opened
 
 end

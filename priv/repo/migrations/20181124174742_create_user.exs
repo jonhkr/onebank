@@ -5,7 +5,7 @@ defmodule OneBank.Repo.Migrations.CreateUser do
     create table(:user, primary_key: false) do
       add(:id, :uuid, primary_key: true)
       add(:name, :string)
-      add(:username, :string, unique: true)
+      add(:username, :string, unique: true, null: false)
       add(:password_hash, :string, null: false)
 
       timestamps()

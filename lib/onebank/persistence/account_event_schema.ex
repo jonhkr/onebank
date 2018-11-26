@@ -2,6 +2,8 @@ defmodule OneBank.AccountEventSchema do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias OneBank.AccountSchema
+
   @foreign_key_type :binary_id
 
   schema "account_event" do
@@ -9,8 +11,7 @@ defmodule OneBank.AccountEventSchema do
     field :correlation_id, Ecto.UUID
     field :type
     field :meta, :map
-
-    timestamps()
+    timestamps(updated_at: false)
   end
 
   @required_fields [:account_id, :type, :meta]

@@ -14,7 +14,7 @@ defmodule OneBank.AccountSchema do
     field :user_id, Ecto.UUID
     field :currency
     field :balance, :decimal, default: 0
-    has_many :events, AccountEventSchema
+    has_many :events, AccountEventSchema, foreign_key: :account_id
 
     timestamps()
   end

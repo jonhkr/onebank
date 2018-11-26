@@ -6,37 +6,51 @@ defmodule OneBank.Account do
     AccountEventSchema,
     AccountRepo,
     AccountOpenedEvent,
+    AccountEvent,
     Repo,
   }
 
   def execute(%OpenAccount{user_id: user_id, initial_deposit: initial_deposit}) do
-    account_params = %{
+    Repo.transaction fn ->
+      account = create_account(user_id)
+
+      event = %AccountOpenedEvent{account_id: account.id, initial_deposit: initial_deposit}
+
+      apply_event(account, event)
+    end
+  end
+
+  defp create_account(user_id) do
+    params = %{
       user_id: user_id,
       iban: generate_iban(),
       currency: "USD"
     }
 
-    Repo.transaction fn ->
-      changeset = AccountSchema.changeset(:create, %AccountSchema{}, account_params)
+    AccountSchema.changeset(:create, %AccountSchema{}, params)
+    |> Repo.insert!
+  end
 
-      account = Repo.insert!(changeset)
+  @spec apply_event(String.t(), AccountEvent.t()) :: term
+  defp apply_event(account_id, event) do
+    account = AccountSchema
+    |> Repo.get(account_id)
 
-      event = %AccountOpenedEvent{
-        account_id: account.id,
-        initial_deposit: initial_deposit
-      }
+    AccountSchema.changeset(:update, account, get_account_state(account, event))
+    |> Repo.update!
 
-      event_changeset = AccountEventSchema.changeset(%AccountEventSchema{}, %{
-        account_id: account.id,
-        type: event.type(),
-        meta: event
-      })
+    event_params = %{
+      account_id: account.id,
+      type: event.type(),
+      meta: event
+    }
 
-      account_update = AccountSchema.changeset(:update, account, %{balance: account.balance + event.initial_deposit})
+    AccountEventSchema.changeset(%AccountEventSchema{}, event_params)
+    |> Repo.insert!
+  end
 
-      Repo.update!(account_update)
-      Repo.insert!(event_changeset)
-    end
+  defp get_account_state(account, %AccountOpenedEvent{initial_deposit: initial_deposit}) do
+    %{balance: account.balance + initial_deposit}
   end
 
   defp generate_iban() do
