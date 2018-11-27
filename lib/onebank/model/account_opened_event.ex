@@ -4,6 +4,6 @@ defmodule OneBank.AccountOpenedEvent do
   defstruct account_id: nil, initial_deposit: nil
 
   @impl OneBank.AccountEvent
-  def type, do: :account_opened
+  def type, do: "account_opened"
 
 end

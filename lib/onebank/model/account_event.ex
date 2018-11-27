@@ -1,5 +1,5 @@
 defmodule OneBank.AccountEvent do
 
-  @callback type() :: atom
+  @callback type() :: String.t()
 
 end

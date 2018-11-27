@@ -32,6 +32,7 @@ defmodule OneBank.AccountSchema do
   def changeset(:update, account, params) do
     account
     |> cast(params, [:balance])
+    |> validate_number(:balance, greater_than_or_equal_to: 0)
     |> optimistic_lock(:version)
   end
 end

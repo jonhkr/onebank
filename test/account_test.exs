@@ -5,6 +5,7 @@ defmodule OneBank.AccountTest do
     UserRepo,
     Command.OpenAccount,
     Command.CreateUser,
+    Command.WithdrawMoney,
     Account
   }
 
@@ -20,7 +21,15 @@ defmodule OneBank.AccountTest do
 
     {:ok, user} = UserRepo.create(create_user)
 
-    Account.execute(%OpenAccount{user_id: user.id, initial_deposit: 1_000})
+    a = Account.execute(%OpenAccount{user_id: user.id, initial_deposit: 1_000})
+      |> Repo.preload(:account)
+
+    IO.puts(inspect a)
+
+    a = Account.execute(%WithdrawMoney{user_id: user.id, amount: 10000})
+      |> Repo.preload(:account)
+
+    IO.puts(inspect a)
   end
 
 end
