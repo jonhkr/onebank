@@ -1,15 +1,14 @@
 User
 - id
-- email
+- username
 - password_hash
-- full_name
+- name
 - created_at
 
 UserRegistered{id: 123}
 
 UserSession
 - id
-- token
 - created_at
 - revoked_at
 
@@ -23,7 +22,7 @@ Account:
 - created_at
 
 AccountEvents:
-InitialDepositCreated(account_id: 1, amount: 1000)
+AccountOpened(account_id: 1, initial_deposit: 1000)
 TransferRequested(account_id: 1, correlation_id: "xxxx-xxx-xxx-xx", amount: 100, destination: "BR123")
 TransferCompleted(account_id: 1, correlation_id: "xxxx-xxx-xxx-xx")
 TransferReceived(account_id: 2, correlation_id: "xxxx-xxx-xxx-xx", amount: 100, source: "BR456")
