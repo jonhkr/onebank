@@ -1,15 +1,11 @@
 defmodule OneBank.UserSessionRepo do
   require Logger
-  import Ecto.Query, only: [from: 2]
 
-  alias OneBank.{UserSession, User, Repo}
+  alias OneBank.{UserSessionSchema, UserSchema, Repo}
 
-  @spec create(User.t()) :: term
+  @spec create(UserSchema.t()) :: term
   def create(user) do
-    changeset = UserSession.changeset(%UserSession{}, %{user_id: user.id})
-
-    IO.puts(inspect changeset)
-
-    Repo.insert(changeset)
+    UserSessionSchema.changeset(%UserSessionSchema{}, %{user_id: user.id})
+    |> Repo.insert
   end
 end

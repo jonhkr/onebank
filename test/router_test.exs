@@ -1,4 +1,4 @@
-defmodule RouterTest do
+defmodule OneBank.RouterTest do
   use ExUnit.Case
   use Plug.Test
 

@@ -1,4 +1,4 @@
-defmodule OneBank.UserSession do
+defmodule OneBank.UserSessionSchema do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -17,7 +17,6 @@ defmodule OneBank.UserSession do
   @required_fields [:user_id]
 
   def changeset(user_session, params \\ :empty) do
-    IO.puts(inspect params)
     user_session
     |> cast(params, @required_fields)
     |> validate_required(@required_fields)

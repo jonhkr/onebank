@@ -4,7 +4,7 @@ config :onebank, OneBank.Repo,
 	database: "onebank_test",
 	username: "root",
 	password: "root",
-	hostname: "localhost",
+	hostname: "192.168.99.100",
 	port: "32299",
   pool: Ecto.Adapters.SQL.Sandbox
 
