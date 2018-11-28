@@ -1,4 +1,4 @@
-defmodule OneBank.User do
+defmodule OneBank.UserSchema do
   use Ecto.Schema
   import Ecto.Changeset
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]

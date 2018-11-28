@@ -67,3 +67,13 @@ defmodule OneBank.AuthenticationError do
                plug_status: 401
 end
 
+defmodule OneBank.InsufficientFundsError do
+  @moduledoc """
+
+  """
+
+  defexception message: "account has no funds to fulfil the transaction",
+               details: %{},
+               plug_status: 422
+end
+
